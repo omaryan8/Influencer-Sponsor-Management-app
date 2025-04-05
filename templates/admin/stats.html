@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Stats
+{% endblock %}
+{% include 'navbar/navbar3.html' %}
+
+{% block content %}
+<div style="width: 600px; height: 400px; display: flex; padding: 20px;">
+    <canvas id="barChart"></canvas>
+    <canvas id="platformChart"></canvas>
+</div>
+<div style="width: 600px; height: 400px; display: flex; padding: 20px;">
+    <canvas id="flaggedUsersChart"></canvas>
+    <canvas id="flaggedCampaignsChart"></canvas>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('barChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels | safe }},
+            datasets: [{
+                label: 'Influencers per Category',
+                data: {{ values | safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',  // Light Red
+                    'rgba(54, 162, 235, 0.2)',  // Light Blue
+                    'rgba(255, 206, 86, 0.2)',  // Light Yellow
+                    'rgba(75, 192, 192, 0.2)',  // Light Teal
+                    'rgba(153, 102, 255, 0.2)', // Light Purple
+                    'rgba(255, 159, 64, 0.2)'   // Light Orange
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',    // Red
+                    'rgba(54, 162, 235, 1)',    // Blue
+                    'rgba(255, 206, 86, 1)',    // Yellow
+                    'rgba(75, 192, 192, 1)',    // Teal
+                    'rgba(153, 102, 255, 1)',   // Purple
+                    'rgba(255, 159, 64, 1)'     // Orange
+                ],
+                borderWidth: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const flaggedCtx = document.getElementById('flaggedUsersChart').getContext('2d');
+
+    new Chart(flaggedCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Flagged Users', 'Non-Flagged Users'],
+            datasets: [{
+                label: 'Flagged Users',
+                data: [{{ flagged_users }}, {{ total_users - flagged_users }}],
+                backgroundColor: ['rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)'], // Red, Blue
+                hoverOffset: 4
+            }]
+        }
+    });
+
+    const flaggedCampaignsCtx = document.getElementById('flaggedCampaignsChart').getContext('2d');
+
+    new Chart(flaggedCampaignsCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Flagged Campaigns', 'Non-Flagged Campaigns'],
+            datasets: [{
+                label: 'Flagged Campaigns',
+                data: [{{ flagged_campaigns }}, {{ total_campaigns - flagged_campaigns }}],
+                backgroundColor: ['rgba(255, 206, 86, 1)', 'rgba(255, 159, 64, 1)' ], // Yellow, Orange
+                hoverOffset: 4
+            }]
+        }
+    });
+
+    const platformCtx = document.getElementById('platformChart').getContext('2d');
+
+    new Chart(platformCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ platform_labels | safe }},
+            datasets: [{
+                label: 'Influencer Platform Presence',
+                data: {{ platform_values | safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',  // Light Red
+                    'rgba(54, 162, 235, 0.2)',  // Light Blue
+                    'rgba(255, 206, 86, 0.2)',  // Light Yellow
+                    'rgba(75, 192, 192, 0.2)',  // Light Teal
+                    'rgba(153, 102, 255, 0.2)', // Light Purple
+                    'rgba(255, 159, 64, 0.2)'   // Light Orange
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',    // Red
+                    'rgba(54, 162, 235, 1)',    // Blue
+                    'rgba(255, 206, 86, 1)',    // Yellow
+                    'rgba(75, 192, 192, 1)',    // Teal
+                    'rgba(153, 102, 255, 1)',   // Purple
+                    'rgba(255, 159, 64, 1)'     // Orange
+                ],
+                borderWidth: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'layout.html'%}
+
+{% block title%}
+Admin
+{% endblock %}
+
+{% block content%}
+{% include 'navbar/navbar3.html' %}
+<h2 class="display-2">Welcome @{{user.username}}</h2><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4.5">
+            <h4>ONGOING CAMPAIGNS</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th class="text-left">Progress</th>
+                        <th class="text-left">Description</th>
+                        <th class="text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for campaign, progress in zip(campaigns, progress_list) %}
+                    {% if campaign.end_date > date.today() %}
+                    <tr>
+                        <td>{{campaign.name}}</td>
+                        <td>{{progress}}%</td>
+                        <td>{{campaign.description}}</td>
+                        <td>
+                            <a href="{{url_for('view_campaign',id=campaign.campaign_id)}}" class="btn btn-warning">View</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6 mt-4">
+            <h4>FLAGGED USERS</h4>
+            <table class="table table-striped table-padding">
+                <thead>
+                    <tr>
+                        <th class="text-left">User ID</th>
+                        <th class="text-left">Username</th>
+                        <th class="text-left">Type</th>
+                        <th class="text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flagged,user in flagged_users %}
+                    <tr>
+                        <td class="text-left">{{ flagged.item_id }}</td>
+                        <td class="text-left">{{ user.username }}</td>
+                        <td class="text-left">{{ flagged.item_type }}</td>
+                        <td class="text-left">
+                        <a href="{{ url_for('view_user',id=flagged.item_id, user_type=flagged.item_type) }}" class="btn btn-warning" style="margin-right: 5px;">View</a>
+                        </td>
+                        <td class="text-left">
+                            <a href="{{url_for('remove_flag',flagged_id=flagged.flagged_id)}}" class="btn btn-danger" style="margin-left: -50px;">Remove</a>
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6 mt-4">
+            <h4>FLAGGED CAMPAIGNS</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-left">Campaign ID</th>
+                        <th class="text-left">Sponsor</th>
+                        <th class="text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flagged,campaign in flagged_campaigns %}
+                    <tr>
+                        <td class="text-left">{{ campaign.name }}</td>
+                        <td class="text-left">{{ campaign.sponsor.name }}</td>
+                        <td class="text-left">
+                            <a href="{{url_for('view_campaign',id=campaign.campaign_id)}}" class="btn btn-warning" style="margin-right: 0px;">View</a>
+                        </td>
+                        <td class="text-left">
+                            <a href="{{url_for('remove_flag',flagged_id=flagged.flagged_id)}}" class="btn btn-danger" style="margin-left: -50px;">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

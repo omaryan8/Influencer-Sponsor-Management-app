@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+Find
+{% endblock %}
+{% include 'navbar/navbar2.html' %}
+
+{% block content%}
+
+<br>
+<form method="post" action="{{ url_for('search_campaigns')}}">
+        <input type="text" name="search" placeholder="Enter campaign name">
+        <input type="number" name="budget" placeholder="Enter campaign budget">
+        <button class="btn btn-success fa fa-search" type="submit">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Campaign Name</th>
+            <th scope="col">Sponsor Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for campaign in campaigns %}
+        {% if campaign.end_date > date.today() %}
+        <tr>
+            <td>{{campaign.name}}</td>
+            <td>{{campaign.sponsor.name}}</td>
+            <td>
+                <a href="{{url_for('view_campaign',id=campaign.campaign_id)}}" class="btn btn-primary">
+                    <i class="fa fa-search"> View</i>
+                </a>
+                <a href="{{url_for('send_ad_request',campaign_id=campaign.campaign_id)}}" class="btn btn-success">
+                    <i class="fa fa-plus"> Request</i>
+                </a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+Update Campaign
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+
+{% block content%}
+<h2 class="display-2">Update Campaign</h2>
+<form method="post" class="form" action="{{url_for('update_campaign',campaign_id=campaign.campaign_id)}}">
+    <label for="name" class="form-label"><b>Name</b></label>
+    <input type="text" class="form-control" id="name" name="name" value="{{ campaign.name }}" required>
+    <label for="description" class="form-label"><b>Description</b></label>
+    <input type="text" name="description" id="description" class="form-control" size="200" value="{{ campaign.description }}" required/>
+    <br>
+    <div class="input-group">
+    <label for="startdate" class="form-label"><b>Start Date</b> 
+    <input type="date" name="startdate" id="startdate" class="form-control" value="{{ campaign.start_date }}"required/>
+    </label>
+    <br>
+    <label for="enddate" class="form-label"><b>End Date</b> 
+    <input type="date" name="enddate" id="enddate" class="form-control" value="{{ campaign.end_date }}"required/>
+    </label>
+    </div>
+    <label for="budget" class="form-label"><b>Budget</b> 
+    <input type="number" name="budget" id="budget" class="form-control" value="{{campaign.budget}}"required/>
+    </label>
+    <br>
+    <label for="visibility"><b>Visibility</b></label>
+    <select name="visibility" id="visibility">
+    <option value="{{campaign.visibility}}" selected hidden>{{campaign.visibility}}</option>
+    <option value="public">Public</option>
+    <option value="private">Private</option>
+    </select>
+    <br><br>
+    <a class="btn btn-danger" href="{{url_for('campaign',campaign_id=campaign.campaign_id)}}">Cancel</a>
+    <input type="submit" class="btn btn-success" value="Update campaign"></form>
+{% endblock%}

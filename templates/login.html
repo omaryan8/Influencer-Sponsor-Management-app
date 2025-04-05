@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login 
+{% endblock %}
+{% include 'navbar/navbar.html' %}
+{% block content %}
+<h1 style="text-align:center"><b>LOGIN</b></h1>
+<form method="POST" action="{{ url_for('login') }}">
+<label for="username" class="form-label"><b>Username</b> 
+<input type="text" name="username" id="username" class="form-control" required/>
+</label>
+<br>
+<label for="password" class='form-label'><b>Password</b>
+<input type="password" name="password" id="password" class="form-control" required/>
+</label>
+<br>
+<label for="role"><b>Role : </b></label>
+<select name="role" id="role">
+  <option value="none" selected disabled hidden>Select an Option</option>
+  <option value="Influencer">Influencer</option>
+  <option value="Sponsor">Sponsor</option>
+  <option value="Admin">Admin</option>
+</select>
+<br><br>
+<input type="submit" value="Login" class="btn btn-success">
+</form>
+{% endblock %}
+
+{% block style %}
+<style>
+form{
+    text-align: center;
+}
+</style>
+{% endblock %}

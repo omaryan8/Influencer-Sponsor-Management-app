@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+View Sponsor
+{% endblock %}
+{% include 'navbar/navbar3.html' %}
+
+{% block content%}
+<h2 class="display-5"><b>Sponsor Details</b></h2><br>
+<ul>
+<li><h5 class="display-8"><b>Name - </b>{{sponsor.name}}</h5></li>
+<li><h5 class="display-8"><b>Industry - </b>{{sponsor.industry}}</h5></li>
+<li><h5 class="display-8"><b>Budget - </b>{{sponsor.budget}}</h5></li>
+</ul>
+{% endblock%}

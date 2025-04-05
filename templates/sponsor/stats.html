@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Stats
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+
+{% block content %}
+<div style="width: 600px; height: 400px; display: flex; padding: 20px;"><canvas id="requestStatusChart"></canvas></div>
+<div style="width: 600px; height: 400px; display: flex; padding: 20px;"><canvas id="campaignTypeChart"></canvas></div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('requestStatusChart').getContext('2d');
+    const requestStatusChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Accepted Requests', 'Rejected Requests','Pending Requests'],
+            datasets: [{
+                label: 'Request Status',
+                data: [{{ accepted_requests }}, {{ rejected_requests }}, {{ pending_requests}}],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',  // Light Teal for Accepted
+                    'rgba(255, 99, 132, 0.2)',  // Light Red for Rejected
+                    'rgba(255, 206, 86, 0.2)'   // Light Yellow for Pending
+
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',    // Teal for Accepted
+                    'rgba(255, 99, 132, 1)',    // Red for Rejected
+                    'rgba(255, 206, 86, 1)'     // Yellow for Pending
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // A chart to show number of private campaigns vs number of public campaigns
+    const ctx2 = document.getElementById('campaignTypeChart').getContext('2d');
+    const campaignTypeChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Private Campaigns', 'Public Campaigns'],
+            datasets: [{
+                label: 'Campaign Type',
+                data: [{{ private_campaigns }}, {{ public_campaigns }}],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',  // Light Teal for Private
+                    'rgba(255, 99, 132, 0.2)',  // Light Red for Public
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',    // Teal for Private
+                    'rgba(255, 99, 132, 1)',    // Red for Public
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock%}

@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+View Influencer
+{% endblock %}
+{% include 'navbar/navbar3.html' %}
+
+{% block content%}
+<h2 class="display-5"><b>Influencer Details</b></h2><br>
+<ul>
+<li><h5 class="display-8"><b>Name - </b>{{influencer.name}}</h5></li>
+<li><h5 class="display-8"><b>Category - </b>{{influencer.category}}</h5></li>
+<li><h5 class="display-8"><b>Platform - </b>{{influencer.platform}}</h5></li>
+<li><h5 class="display-8"><b>Reach - </b>{{influencer.reach}}</h5></li>
+</ul>
+{% endblock%}

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Update Ad Request
+{% endblock %}
+
+{% if user_role == 'Influencer' %}
+    {% include 'navbar/navbar2.html' %}
+{% elif user_role == 'Sponsor' %}
+    {% include 'navbar/navbar4.html' %}
+{% endif %}
+
+{% block content %}
+<h2 class="display-2">Update Ad Request</b></h2><br>
+<form method="post" class="form" action="{{url_for('update_request',ad_request_id=ad_request.ad_request_id)}}">
+    <label for="name" class="form-label"><b>Name</b> 
+    <input type="text" name="name" id="name" class="form-control" value="{{ad_request.name}}" required/>
+    </label>
+    <br>
+    <label for="message" class="form-label"><b>Message</b>
+    <textarea class="form-control" id="message" name="message" style="width: 500px;" value="{{ad_request.messages}}" required autofocus></textarea>
+    </label><br>
+    <label for="payment" class="form-label"><b>Payment amount</b> 
+    <input type="number" name="payment" id="payment" class="form-control" value={{ad_request.payment_amount}} required/>
+    </label>
+    <br>
+    {% if user_role == 'Influencer' %}
+        <a class="btn btn-danger" href="{{url_for('influencer_profile')}}">Cancel</a>
+    {% elif user_role == 'Sponsor' %}
+        <a class="btn btn-danger" href="{{url_for('sponsor_profile')}}">Cancel</a>
+    {% endif %}
+    <input type="submit" class="btn btn-success" value="Update">
+</form>
+{% endblock %}

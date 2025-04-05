@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Register
+{% endblock %}
+{% include 'navbar/navbar.html' %}
+{% block content %}
+<h1 style="text-align:center"><b>SPONSOR REGISTERATION</b></h1><br>
+<form method="POST" action="{{ url_for('sponsor_register') }}">
+<label for="name" class="form-label"><b>Name</b> 
+<input type="text" name="name" id="name" class="form-control" required/>
+</label>
+<br>
+<label for="username" class="form-label"><b>Username</b> 
+<input type="text" name="username" id="username" class="form-control" required/>
+</label>
+<br>
+<label for="password" class='form-label'><b>Password</b>
+<input type="password" name="password" id="password" class="form-control" required/>
+</label>
+<br>
+<label for="confirm_password" class='form-label'><b>Confirm Password</b>
+<input type="password" name="confirm_password" id="confirm_password" class="form-control" required/>
+</label>
+<br>
+<label for="budget" class="form-label"><b>Budget</b> 
+<input type="number" name="budget" id="budget" class="form-control" required/>
+</label><br>
+<label for="industry"><b>Industry : </b></label>
+<select name="industry" id="industry">
+  <option value="none" selected disabled hidden>Select an Option</option>
+  <option value="Fashion & Lifestyle">Fashion & Lifestyle</option>
+  <option value="Gaming">Gaming</option>
+  <option value="Food Blogging">Food Blogging</option>
+  <option value="Travel">Travel</option>
+  <option value="Fitness">Fitness</option>
+  <option value="Technology">Technology</option>
+</select><br><br>
+<input type="submit" value="Register" class="btn btn-success">
+</form>
+{% endblock %}
+
+{% block style %}
+<style>
+form{
+    text-align: center;
+}
+</style>
+{% endblock %}

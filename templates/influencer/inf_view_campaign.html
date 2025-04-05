@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+View Campaign
+{% endblock %}
+{% include 'navbar/navbar2.html' %}
+
+{% block content%}
+<h2 class="display-5"><b>Campaign Name - {{campaign.name}}</b></h2><br>
+<ul>
+<li><h5 class="display-8"><b>Description - </b>{{campaign.description}}</h5></li>
+<li><h5 class="display-8"><b>Created By - </b>{{campaign.sponsor.name}}</h5></li>
+<li><h5 class="display-8"><b>Starting Date - </b>{{campaign.start_date}}</h5></li>
+<li><h5 class="display-8"><b>Ending Date - </b>{{campaign.end_date}}</h5></li>
+<li><h5 class="display-8"><b>Budget - </b>{{campaign.budget}}</h5></li>
+</ul>
+{% endblock%}

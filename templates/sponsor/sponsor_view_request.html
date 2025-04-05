@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+View Request
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+
+{% block content%}
+<h2 class="display-5"><b>Ad Name - {{adrequest.name}}</b></h2><br>
+<ul>
+<li><h5 class="display-8"><b>Description - </b>{{adrequest.messages}}</h5></li>
+<li><h5 class="display-8"><b>Payment - </b>{{adrequest.payment_amount}}</h5></li>
+<li><h5 class="display-8"><b>Status - </b>{{adrequest.status}}</h5></li>
+{% if adrequest.status == "Pending" %}
+{% if adrequest.sender == "Influencer" %}
+<li>
+    <h5 class="display-8"><b>Actions:</b></h5>
+    <a href="{{url_for('accept_request',ad_request_id=adrequest.ad_request_id)}}" class="btn btn-success"><i>Accept</i></a>
+    <a href="{{url_for('reject_request',ad_request_id=adrequest.ad_request_id)}}" class="btn btn-danger"><i>Reject</i></a>
+</li>
+{% endif %}
+{% endif %}
+</ul>
+{% endblock%}

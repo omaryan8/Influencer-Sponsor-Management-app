@@ -1,0 +1,25 @@
+{% extends 'layout.html'%}
+
+{% block title%}
+Send Ad Request
+{% endblock %}
+{% include 'navbar/navbar2.html' %}
+{% block content%}
+<h2 class="display-2">Create New Ad Request</b></h2><br>
+<form method="post" class="form" action="{{url_for('send_ad_request',campaign_id=campaign_id)}}">
+    <label for="name" class="form-label"><b>Name</b> 
+    <input type="text" name="name" id="name" class="form-control" required/>
+    </label>
+    <br>
+    <label for="message" class="form-label"><b>Message</b>
+    <textarea class="form-control" id="message" name="message" style="width: 500px;" required autofocus></textarea>
+    </label><br>
+    <label for="payment" class="form-label"><b>Payment amount</b> 
+    <input type="number" name="payment" id="payment" class="form-control" required/>
+    </label>
+    <br>
+    <a class="btn btn-danger" href="{{url_for('find_campaigns')}}">Cancel</a>
+    <input type="submit" class="btn btn-success" value="Add">
+</form>
+{% endblock%}
+

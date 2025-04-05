@@ -1,0 +1,39 @@
+{% extends 'layout.html'%}
+
+{% block title%}
+Ad Request
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+{% block content%}
+<h2 class="display-2">Create New Ad Request</b></h2><br>
+<form method="post" class="form" action="{{url_for('new_ad_request',influencer_id=influencer_id)}}">
+    <label for="influencer" class="form-label"><b>Select Influencer: </b></label>
+    <a href="{{ url_for('find') }}" class="btn btn-warning">Find</a>
+    <br><br>
+    <label for="campaign_id"><b>Select Campaign:</b>
+    <select name="campaign_id" id="campaign_id" required>
+        <option value="hidden">--Select a Campaign--</option>
+        {% for campaign in campaigns %}
+        {% if campaign.end_date > date.today() %}
+            <option value="{{ campaign.campaign_id }}" name="campaign_id" id="campaign_id" >{{ campaign.name }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    </label>
+    <br><br>
+    <label for="name" class="form-label"><b>Ad Name</b> 
+    <input type="text" name="name" id="name" class="form-control" required/>
+    </label>
+    <br>
+    <label for="message" class="form-label"><b>Description and Terms for the Influencer</b>
+    <textarea class="form-control" id="message" name="message" style="width: 500px;" required autofocus></textarea>
+    </label><br>
+    <label for="payment" class="form-label"><b>Payment amount</b> 
+    <input type="number" name="payment" id="payment" class="form-control" required/>
+    </label>
+    <br>
+    <a class="btn btn-danger" href="{{url_for('campaign')}}">Cancel</a>
+    <input type="submit" class="btn btn-success" value="Add">
+</form>
+{% endblock%}
+

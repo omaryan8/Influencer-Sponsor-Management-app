@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Find
+{% endblock %}
+{% include 'navbar/navbar3.html' %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <form method="post" action="{{ url_for('admin_find') }}">
+        <input type="text" name="search" placeholder="Search here">
+        <button class="btn btn-success fa fa-search" type="submit">Search</button>
+    </form>
+    <br>
+
+    <div class="row">
+        <div class="col-md-4.5">
+            <h3>CAMPAIGNS</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sponsor</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for campaign in campaigns %}
+                    <tr>
+                        <td>{{ campaign.name }}</td>
+                        <td>{{ campaign.sponsor.name }}</td>
+                        <td>{{ campaign.description }}</td>
+                        <td>
+                            <a href="{{url_for('view_campaign',id=campaign.campaign_id)}}" class="btn btn-warning">View</a>
+                            <a href="{{url_for('flag',item_type='Campaign',item_id=campaign.campaign_id)}}" class="btn btn-danger">Flag</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 mt-4">
+            <h3>SPONSORS</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Industry</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sponsor in sponsors %}
+                    <tr>
+                        <td>{{ sponsor.name }}</td>
+                        <td>{{ sponsor.industry }}</td>
+                        <td>
+                            <a href="{{url_for('view_sponsor',sponsor_id=sponsor.sponsor_id)}}" class="btn btn-warning">View</a>
+                            <a href="{{url_for('flag',item_type='Sponsor',item_id=sponsor.user_id)}}" class="btn btn-danger">Flag</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6 mt-4">
+            <h3>INFLUENCERS</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for influencer in influencers %}
+                    <tr>
+                        <td>{{ influencer.name }}</td>
+                        <td>{{ influencer.category }}</td>
+                        <td>
+                            <a href="{{url_for('view_influencer',influencer_id=influencer.influencer_id)}}" class="btn btn-warning">View</a>
+                            <a href="{{url_for('flag',item_type='Influencer',item_id=influencer.user_id)}}" class="btn btn-danger">Flag</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

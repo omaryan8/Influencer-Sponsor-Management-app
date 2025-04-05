@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+Sponsor Profile
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+
+{% block content%}
+<h2 class="display-2">Welcome @{{user.username}}</h2><br>
+<h4>Ongoing Campaigns</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Campaign Name</th>
+            <th scope="col">Campaign Progress</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for campaign, progress in zip(campaigns, progress_list) %}
+        {% if campaign.end_date > date.today() %}
+        <tr>
+            <td>{{campaign.name}}</td>
+            <td>{{progress}}%</td>
+            <td>
+                <a href="{{url_for('view_campaign',id=campaign.campaign_id)}}" class="btn btn-primary">
+                    <i class="fa fa-search">View</i>
+                </a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<h4>Ad Requests</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Campaign Name</th>
+            <th scope="col">Influencer Name</th>
+            <th scope="col">Sender</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ad_request in ad_requests %}
+        <tr>
+            <td>{{ad_request.campaign.name}}</td>
+            <td>{{ad_request.influencer.name}}</td>
+            <td>{{ad_request.sender}}</td>
+            <td><span class="
+                {% if ad_request.status == 'Accepted' %}
+                    text-success
+                {% elif ad_request.status == 'Rejected' %}
+                    text-danger
+                {% elif ad_request.status == 'Pending' %}
+                    text-warning
+                {% endif %}
+            ">
+                {{ ad_request.status }}
+            </span></td>
+            <td>
+
+                <a href="{{url_for('view_request',ad_request_id=ad_request.ad_request_id)}}" class="btn btn-primary fa fa-search">
+                View
+                </a>
+                {% if ad_request.status == 'Pending' %}
+                {% if ad_request.sender == "Influencer" %}
+                <a href="{{url_for('accept_request',ad_request_id=ad_request.ad_request_id)}}" class="btn btn-success fa">
+                    Accept
+                </a>
+                <a href="{{url_for('reject_request',ad_request_id=ad_request.ad_request_id)}}" class="btn btn-warning fa">
+                    Reject
+                </a>
+                {% elif ad_request.sender == 'Sponsor'%}
+                <a href="{{url_for('update_request',ad_request_id=ad_request.ad_request_id)}}" class="btn btn-info fa">Update</a>
+                {% endif %}
+                {% endif %}
+                <a href="{{url_for('delete_request',ad_request_id=ad_request.ad_request_id)}}" class="btn btn-danger fa">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% endblock%}
+

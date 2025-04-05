@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+Campaign
+{% endblock %}
+{% include 'navbar/navbar4.html' %}
+
+{% block content%}
+<h2 class="display-2">Campaign</h2>
+<a class="btn btn-success fa fa-plus" href="{{url_for('add_campaign')}}" role="button">Add</a><br>
+<div class="row row-cols-1 row-cols-md-3 py-4">
+{% for campaign in campaigns %}
+{% if campaign.end_date > date.today() %}
+<div class="card m-2" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{campaign.name}}</h5>
+    <p class="card-text">{{campaign.description}}</p>
+    <a href="{{ url_for('view_campaign', id=campaign.campaign_id) }}" class="card-link">More Info</a>
+    <a href="{{ url_for('new_ad_request', campaign_id=campaign.campaign_id) }}" class="card-link">New Ad Request</a>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+{% endblock %}
